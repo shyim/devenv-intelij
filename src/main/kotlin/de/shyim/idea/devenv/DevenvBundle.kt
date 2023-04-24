@@ -1,4 +1,4 @@
-package com.github.shyim.devenvintelij
+package de.shyim.idea.devenv
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls
@@ -7,7 +7,7 @@ import org.jetbrains.annotations.PropertyKey
 @NonNls
 private const val BUNDLE = "messages.MyBundle"
 
-object MyBundle : DynamicBundle(BUNDLE) {
+object DevenvBundle : DynamicBundle(BUNDLE) {
 
     @Suppress("SpreadOperator")
     @JvmStatic
@@ -18,4 +18,6 @@ object MyBundle : DynamicBundle(BUNDLE) {
     @JvmStatic
     fun messagePointer(@PropertyKey(resourceBundle = BUNDLE) key: String, vararg params: Any) =
         getLazyMessage(key, *params)
+
+
 }

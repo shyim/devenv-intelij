@@ -1,18 +1,29 @@
-<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.shyim.devenvintelij</id>
-    <name>devenv-intelij Template</name>
+    <id>de.shyim.idea.devenv</id>
+    <name>Devenv Intelij</name>
     <vendor>shyim</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.jetbrains.php</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
-
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.shyim.devenvintelij.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <postStartupActivity implementation="de.shyim.idea.devenv.listener.ProjectOpenedListener"/>
+
+        <notificationGroup id="Devenv" key="name" displayType="STICKY_BALLOON" />
+
+        <phpRunConfigurationExtension
+                implementation="de.shyim.idea.devenv.run.PhpConfigurationExtension"
+                id="direnvPHPRunConfig"/>
     </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.shyim.devenvintelij.listeners.MyFrameStateListener" topic="com.intellij.ide.FrameStateListener"/>
-    </applicationListeners>
+    <actions>
+        <action
+                class="de.shyim.idea.devenv.action.ConfigurePHPInterpreter"
+                id="de.shyim.idea.devenv.action.ConfigurePHPInterpreter"
+                text="Configure PHP Interpreter for Devenv"
+                description="Configure PHP Interpreter for Devenv">
+            <add-to-group group-id="ToolsMenu"/>
+        </action>
+    </actions>
 </idea-plugin>
