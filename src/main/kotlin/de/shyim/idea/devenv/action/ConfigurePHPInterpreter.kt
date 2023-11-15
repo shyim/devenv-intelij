@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.DumbAwareAction
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.guessProjectDir
+import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.vfs.VfsUtil
 import com.jetbrains.php.config.PhpProjectConfigurationFacade;
 import com.jetbrains.php.config.interpreters.PhpInterpreter
@@ -25,9 +26,18 @@ class ConfigurePHPInterpreter: DumbAwareAction() {
         val phpConfigurationFacade = PhpProjectConfigurationFacade.getInstance(e.project!!);
         val phpConfiguration = phpConfigurationFacade.projectConfiguration;
 
+        var devenvInterpreter: String;
+
+        try {
+            devenvInterpreter = getInterpreterPath(e.project!!)
+        } catch (e: Exception) {
+            Messages.showInfoMessage("Cannot find PHP binary", "Devenv")
+            return
+        }
+
         val existingInterpreter = hasDevenvInterpreter(e.project!!)
         if (existingInterpreter != null) {
-            existingInterpreter.homePath = getInterpreterPath(e.project!!)
+            existingInterpreter.homePath = devenvInterpreter
             existingInterpreter.setIsProjectLevel(true)
 
             phpConfiguration.interpreterName = existingInterpreter.name;
@@ -39,7 +49,7 @@ class ConfigurePHPInterpreter: DumbAwareAction() {
         val interpreter = PhpInterpreter();
         interpreter.name = INTERPRETER_NAME
         interpreter.setIsProjectLevel(true)
-        interpreter.homePath = getInterpreterPath(e.project!!)
+        interpreter.homePath = devenvInterpreter
 
         if (phpConfiguration.interpreterName == null) {
             phpConfiguration.interpreterName = interpreter.name;
@@ -51,7 +61,15 @@ class ConfigurePHPInterpreter: DumbAwareAction() {
     }
 
     private fun getInterpreterPath(project: Project): String {
-        return VfsUtil.findRelativeFile(project.guessProjectDir(), ".devenv", "profile", "bin", "php")!!.path
+        val phpBinaries = listOf("php-pcov", "php-xdebug", "php")
+
+        for (binary in phpBinaries) {
+            if (VfsUtil.findRelativeFile(project.guessProjectDir(), ".devenv", "profile", "bin", binary) !== null) {
+                return VfsUtil.findRelativeFile(project.guessProjectDir(), ".devenv", "profile", "bin", binary)!!.path
+            }
+        }
+
+        throw Exception("No PHP binary found")
     }
 
     private fun loadPhpInfo(project: Project, interpreter: PhpInterpreter) {
