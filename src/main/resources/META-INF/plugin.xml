@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>de.shyim.idea.devenv</id>
-    <name>Devenv Intelij</name>
+    <name>Devenv.sh Support</name>
     <vendor>shyim</vendor>
 
     <depends>com.intellij.modules.platform</depends>
