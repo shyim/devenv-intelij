@@ -17,11 +17,13 @@
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
 <!-- Plugin description -->
-This Fancy IntelliJ Platform Plugin is going to be your implementation of the brilliant ideas that you have.
+This plugin adds some utilities to simplify the Devenv.sh configuration for Intelij IDEs. 
 
-This specific section is a source for the [plugin.xml](/src/main/resources/META-INF/plugin.xml) file which will be extracted by the [Gradle](/build.gradle.kts) during the build process.
+Right now it supports only PHP as language.
 
-To keep everything working, do not remove `<!-- ... -->` sections. 
+- Detect Devenv project and configure a PHP interpreter
+  - Pcov or XDebug executables are preferred, to be used in Test runner
+- Automatically injection of Devenv environment variables into the IDE like Test runner
 <!-- Plugin description end -->
 
 ## Installation
