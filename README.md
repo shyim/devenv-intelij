@@ -1,8 +1,8 @@
 # devenv-intelij
 
 ![Build](https://github.com/shyim/devenv-intelij/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
+[![Version](https://img.shields.io/jetbrains/plugin/v/23136.svg)](https://plugins.jetbrains.com/plugin/23136)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/23136.svg)](https://plugins.jetbrains.com/plugin/23136)
 
 <!-- Plugin description -->
 This plugin adds some utilities to simplify the Devenv.sh configuration for Intelij IDEs. 
