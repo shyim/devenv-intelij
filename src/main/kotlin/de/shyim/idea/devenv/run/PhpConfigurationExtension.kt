@@ -28,14 +28,10 @@ class PhpConfigurationExtension: PhpRunConfigurationExtension() {
                 .withWorkDirectory(configuration.project.guessProjectDir()!!.path)
                 .createProcess()
 
-        println("HOWWWWWWWW")
-
         if (process.waitFor() != 0) {
             return
         }
 
-        val stdOut: String = IOUtils.toString(process.inputStream, StandardCharsets.UTF_8)
-        println(stdOut)
 
         val type: Type = object : TypeToken<Map<String?, String?>?>() {}.getType()
 
