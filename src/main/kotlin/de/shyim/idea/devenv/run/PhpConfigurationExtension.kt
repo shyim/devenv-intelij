@@ -27,8 +27,8 @@ class PhpConfigurationExtension: PhpRunConfigurationExtension() {
     }
 
     override fun patchCommandLine(configuration: PhpRunConfiguration<*>, runnerSettings: RunnerSettings?, cmdLine: GeneralCommandLine, runnerId: String) {
-        val process = GeneralCommandLine("direnv", "export", "json")
-                .withWorkDirectory(configuration.project.guessProjectDir()!!.path)
+        val process = GeneralCommandLine("direnv", "exec", "/", "direnv", "export", "json")
+                .withWorkDirectory(cmdLine.workDirectory)
                 .createProcess()
 
         if (process.waitFor() != 0) {
