@@ -6,6 +6,9 @@ import com.google.gson.reflect.TypeToken
 import com.intellij.codeInsight.hint.HintManager
 import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.execution.configurations.RunnerSettings
+import com.intellij.notification.NotificationGroupManager
+import com.intellij.notification.NotificationType
+import com.intellij.notification.NotificationsManager
 import com.intellij.openapi.project.guessProjectDir
 import com.jetbrains.php.config.interpreters.PhpInterpreter
 import com.jetbrains.php.run.PhpRunConfiguration
@@ -29,13 +32,20 @@ class PhpConfigurationExtension: PhpRunConfigurationExtension() {
                 .createProcess()
 
         if (process.waitFor() != 0) {
+            val stdErr: String = IOUtils.toString(process.errorStream, StandardCharsets.UTF_8)
+
+            NotificationGroupManager.getInstance()
+                .getNotificationGroup("Devenv")
+                .createNotification("Direnv error", stdErr, NotificationType.ERROR)
+
             return
         }
 
+        val stdOut: String = IOUtils.toString(process.inputStream, StandardCharsets.UTF_8)
 
-        val type: Type = object : TypeToken<Map<String?, String?>?>() {}.getType()
+        val type: Type = object : TypeToken<Map<String?, String?>?>() {}.type
 
-        var returnMap  = Gson().fromJson<Map<String, String>>(stdOut, type)
+        val returnMap  = Gson().fromJson<Map<String, String>>(stdOut, type)
 
         if (returnMap.isNotEmpty()) {
             returnMap.forEach { (key, value) ->
