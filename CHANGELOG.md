@@ -3,5 +3,12 @@
 # devenv-intelij Changelog
 
 ## [Unreleased]
+
+## [0.0.4] - 2024-05-23
+
 ### Added
-- Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+
+- Fixed project dir detection, so attached projects are working
+
+[Unreleased]: https://github.com/shyim/devenv-intelij/compare/v0.0.4...HEAD
+[0.0.4]: https://github.com/shyim/devenv-intelij/commits/v0.0.4
